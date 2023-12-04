@@ -38,12 +38,9 @@ func main() {
 		logger: logger,
 	}
 
-	mux := http.NewServeMux()
-	mux.HandleFunc("/v1/healthcheck", app.healthcheckHandler)
-
 	srv := &http.Server{
 		Addr:    fmt.Sprintf(":%d", cfg.port),
-		Handler: mux,
+		Handler: app.routes(),
 	}
 
 	logger.Info("starting server", "addr", srv.Addr, "env", cfg.env)
@@ -54,7 +51,7 @@ func main() {
 }
 
 func (app *application) healthcheckHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Println(w, "status: available")
+	fmt.Fprintln(w, "status: available")
 	fmt.Fprintf(w, "environment: %s\n", app.config.env)
 	fmt.Fprintf(w, "version %s\n", version)
 }
