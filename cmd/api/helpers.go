@@ -9,6 +9,8 @@ import (
 	"github.com/julienschmidt/httprouter"
 )
 
+type JSONEnvelope map[string]any
+
 // readIDParam takes in a request context and returns a tracks ID.
 func (app *application) readIDParam(r *http.Request) (int64, error) {
 	params := httprouter.ParamsFromContext(r.Context())
@@ -20,8 +22,8 @@ func (app *application) readIDParam(r *http.Request) (int64, error) {
 
 }
 
-func (app *application) writeJSON(w http.ResponseWriter, status int, data any, headers http.Header) error {
-	payload, err := json.Marshal(data)
+func (app *application) writeJSON(w http.ResponseWriter, status int, data JSONEnvelope, headers http.Header) error {
+	payload, err := json.MarshalIndent(data, "", "\t")
 	if err != nil {
 		return err
 	}
