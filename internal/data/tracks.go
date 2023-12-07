@@ -1,6 +1,8 @@
 package data
 
-import "time"
+import (
+	"time"
+)
 
 type Track struct {
 	ID          int64             `json:"id"`
@@ -9,7 +11,7 @@ type Track struct {
 	Artist      []string          `json:"artist"`
 	Year        int32             `json:"year,omitempty,string"`
 	Description string            `json:"description,omitempty"`
-	Duration    int64             `json:"track_duration,omitempty"` // In seconds
+	Duration    int64             `json:"duration_ms,omitempty"` // In seconds
 	Genres      []string          `json:"genre,omitempty"`
 	Links       map[string]string `json:"links"`
 	Version     int32             `json:"-"`
